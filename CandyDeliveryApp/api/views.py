@@ -1,5 +1,4 @@
 from django.forms import model_to_dict
-from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import  Response
 from rest_framework import status
@@ -29,30 +28,6 @@ def api_couriers(request):
         result[-1].update(serializer.errors)
     result = {'validation_error': {'couriers': result}}
     return Response(dict_to_json(result), status=status.HTTP_400_BAD_REQUEST)
-
-
-# @api_view(['POST'])
-# def api_couriers(request):
-#     errors = []
-#     result = []
-#     objects = []
-#     for i in request.data:
-#         serializer = CourierSerializer(data=i)
-#         if serializer.is_valid():
-#             objects.append(serializer)
-#             result.append({'id': serializer.data.get('courier_id')})
-#             continue
-#         errors.append({'id': serializer.data.get('courier_id')})
-#         errors[-1].update(serializer.errors)
-#     if errors:
-#         errors = {'validation_error': {'couriers': errors}}
-#         errors = dict_to_json(errors)
-#         return Response(errors, status=status.HTTP_400_BAD_REQUEST)
-#     for i in objects:
-#         i.save()
-#     result = {'couriers': result}
-#     result = dict_to_json(result)
-#     return Response(result, status=status.HTTP_201_CREATED)
 
 
 @api_view(['PATCH', 'GET'])
@@ -127,28 +102,6 @@ def api_orders(request):
     result = {'validation_error': {'orders': result}}
     return Response(dict_to_json(result), status=status.HTTP_400_BAD_REQUEST)
 
-# @api_view(['POST'])
-# def api_orders(request):
-#     errors = []
-#     result = []
-#     objects = []
-#     for i in request.data:
-#         serializer = OrderSerializer(data=i)
-#         if not serializer.is_valid():
-#             errors.append({'id': serializer.data.get('order_id')})
-#             errors[-1].update(serializer.errors)
-#             continue
-#         objects.append(serializer)
-#         result.append({'id': serializer.data.get('order_id')})
-#     if errors:
-#         errors = {'validation_error': {'orders': errors}}
-#         errors = dict_to_json(errors)
-#         return Response(errors, status=status.HTTP_400_BAD_REQUEST)
-#     for i in objects:
-#         i.save()
-#     result = {'orders': result}
-#     result = dict_to_json(result)
-#     return Response(result, status=status.HTTP_201_CREATED)
 
 @api_view(['POST'])
 def api_orders_assign(request):
@@ -188,5 +141,3 @@ def api_orders_complete(request):
         result = dict_to_json(result)
         return Response(result, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-

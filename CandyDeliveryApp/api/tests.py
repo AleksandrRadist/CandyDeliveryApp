@@ -40,7 +40,7 @@ class TestCouriers(TestCase):
         response = self.client.post(reverse('couriers'), data=json.dumps(data), content_type='application/json')
         self.assertEqual(response.status_code, 201)
         self.assertEqual(Courier.objects.all().count(), self.orders_number + 3)
-        self.assertEqual(response.data, {"couriers":[{"id": 6}, {"id": 5}, {"id": 4}]})
+        self.assertEqual(response.data, {"couriers": [{"id": 6}, {"id": 5}, {"id": 4}]})
         for i in data:
             courier = Courier.objects.get(courier_id=i['courier_id'])
             self.assertEqual(courier.courier_type, i['courier_type'])
