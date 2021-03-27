@@ -1,6 +1,7 @@
 import datetime
 import json
-from orders.models import Order, Courier, COURIERS_TYPE_AND_WEIGHT_MAPPING
+
+from orders.models import COURIERS_TYPE_AND_WEIGHT_MAPPING, Courier, Order
 
 
 def check_overlap(t1_start, t1_end, t2_start, t2_end):

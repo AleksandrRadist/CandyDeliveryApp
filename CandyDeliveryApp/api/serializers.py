@@ -1,7 +1,7 @@
-from rest_framework import serializers
-
 from datetime import datetime as dt
+
 from orders.models import Courier, Order
+from rest_framework import serializers
 from rest_framework.fields import empty
 from rest_framework.settings import api_settings
 

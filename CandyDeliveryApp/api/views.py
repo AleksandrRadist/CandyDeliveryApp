@@ -1,11 +1,14 @@
-from django.forms import model_to_dict
-from rest_framework.decorators import api_view
-from rest_framework.response import  Response
-from rest_framework import status
-from .serializers import CourierSerializer, OrderSerializer, OrderAssignmentSerializer, OrderCompletionSerializer
-from orders.models import Courier, Order, COURIER_EARNINGS_COEFFICIENTS
-from .service import check_courier_and_orders_compatibility, dict_to_json
 from datetime import datetime as dt
+
+from django.forms import model_to_dict
+from orders.models import COURIER_EARNINGS_COEFFICIENTS, Courier, Order
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from .serializers import (CourierSerializer, OrderAssignmentSerializer,
+                          OrderCompletionSerializer, OrderSerializer)
+from .service import check_courier_and_orders_compatibility, dict_to_json
 
 
 @api_view(['POST'])

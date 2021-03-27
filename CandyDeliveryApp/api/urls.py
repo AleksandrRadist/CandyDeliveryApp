@@ -1,6 +1,7 @@
 from django.urls import path
 
-from .views import api_couriers, api_couriers_detail, api_orders, api_orders_assign, api_orders_complete
+from .views import (api_couriers, api_couriers_detail, api_orders,
+                    api_orders_assign, api_orders_complete)
 
 urlpatterns = [
     path('couriers/', api_couriers, name='couriers'),
