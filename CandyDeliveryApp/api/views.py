@@ -37,7 +37,7 @@ def api_couriers(request):
 def api_couriers_detail(request, courier_id):
     courier = Courier.objects.filter(courier_id=courier_id)
     if not courier:
-        return Response(dict_to_json({'errors': 'Courier with such id does not exist'}),
+        return Response(dict_to_json({'validation_error': {'courier_id': 'Courier with such id does not exist'}}),
                         status=status.HTTP_400_BAD_REQUEST)
     courier = Courier.objects.get(courier_id=courier_id)
     if request.method == 'PATCH':
@@ -52,7 +52,8 @@ def api_couriers_detail(request, courier_id):
                     order.assign_time = None
                     order.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        errors = dict_to_json({'validation_error': serializer.errors})
+        return Response(errors, status=status.HTTP_400_BAD_REQUEST)
     if request.method == 'GET':
         min_time = None
         for region in courier.regions:
@@ -128,7 +129,8 @@ def api_orders_assign(request):
         result = {'orders': result, 'assign_time': date_str} if result else {'orders': result}
         result = dict_to_json(result)
         return Response(result, status=status.HTTP_200_OK)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    errors = dict_to_json({'validation_error': serializer.errors})
+    return Response(errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['POST'])
@@ -143,4 +145,5 @@ def api_orders_complete(request):
         result = {'order_id': order.order_id}
         result = dict_to_json(result)
         return Response(result, status=status.HTTP_200_OK)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    errors = dict_to_json({'validation_error': serializer.errors})
+    return Response(errors, status=status.HTTP_400_BAD_REQUEST)
